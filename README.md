@@ -94,6 +94,88 @@ Open `reports/dashboard/jfk_operational_risk_dashboard.html` in any modern brows
 
 使用任意现代浏览器打开 `reports/dashboard/jfk_operational_risk_dashboard.html` 即可。
 
+## Collaboration workflow | 协作开发流程
+
+If someone wants to continue building on this repository with write access, the recommended workflow is:
+
+如果其他人获得了这个仓库的写权限，推荐按下面的流程继续开发：
+
+```bash
+git clone https://github.com/simonxrwang/jfk-airline-operational-risk.git
+cd jfk-airline-operational-risk
+conda env create -f environment.yml
+conda activate operational_risk
+git checkout -b feat/your-change
+```
+
+After making changes:
+
+完成修改后可以使用：
+
+```bash
+git add .
+git commit -m "Describe your change"
+git push -u origin feat/your-change
+```
+
+Then open a Pull Request on GitHub to merge the branch back into `main`.
+
+之后在 GitHub 上发起 Pull Request，再把该分支合并回 `main`。
+
+If someone does not have write access, they should fork the repository first, then work from their own fork and submit a Pull Request back to this repository.
+
+如果对方没有写权限，应该先 fork 本仓库，再在自己的 fork 上开发，最后向本仓库发起 Pull Request。
+
+## Access management | 权限管理
+
+### How to know who can edit this repository | 如何查看谁有编辑权限
+
+For a personal repository on GitHub, people with collaborator access can edit and push to the repository.
+
+对于个人账户下的 GitHub 仓库，拥有 collaborator 权限的人可以直接编辑并推送代码。
+
+To check who currently has access:
+
+你可以通过下面方式查看当前谁有权限：
+
+1. Open the repository on GitHub.
+2. Click `Settings`.
+3. In the left sidebar, open `Collaborators`.
+4. Review the people listed there and any pending invitations.
+
+1. 打开仓库主页。
+2. 点击 `Settings`。
+3. 在左侧边栏进入 `Collaborators`。
+4. 查看已添加人员和待接受邀请。
+
+### How to let someone edit the repository | 如何让别人获得编辑权限
+
+1. Open the repository on GitHub.
+2. Click `Settings`.
+3. In the left sidebar, click `Collaborators`.
+4. Click `Add people`.
+5. Enter the person's GitHub username or email.
+6. Send the invitation.
+7. Once they accept, they will be able to push changes directly if you invited them to your personal repository as a collaborator.
+
+1. 打开仓库主页。
+2. 点击 `Settings`。
+3. 在左侧边栏点击 `Collaborators`。
+4. 点击 `Add people`。
+5. 输入对方的 GitHub 用户名或邮箱。
+6. 发送邀请。
+7. 对方接受后，就可以作为协作者直接向仓库推送修改。
+
+### Recommended collaboration model | 推荐协作方式
+
+- Give direct collaborator access only to people you trust to push code responsibly.
+- Ask collaborators to work on feature branches instead of pushing directly to `main`.
+- Use Pull Requests to review changes before merging.
+
+- 只给你信任的人直接协作者权限。
+- 让协作者在功能分支上开发，不要直接推送到 `main`。
+- 用 Pull Request 审查修改后再合并。
+
 ## Main outputs | 主要输出文件
 
 - `jfk_airline_delay_readable_full`
