@@ -1,0 +1,14 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Notebook / editor noise
+.ipynb_checkpoints/
+.DS_Store
+
+# Office temporary files
+~$*.xlsx
+~$*.xls
+
+# Local plotting cache
+outputs/.mplconfig/

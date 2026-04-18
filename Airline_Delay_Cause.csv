@@ -1,0 +1,102 @@
+year,month,carrier,carrier_name,airport,airport_name,arr_flights,arr_del15,carrier_ct,weather_ct,nas_ct,security_ct,late_aircraft_ct,arr_cancelled,arr_diverted,arr_delay,carrier_delay,weather_delay,nas_delay,security_delay,late_aircraft_delay
+2025,12,9E,Endeavor Air Inc.,JFK,"New York, NY: John F. Kennedy International",1541.00,533.00,99.45,20.59,171.09,0.00,241.87,82.00,1.00,51582.00,12799.00,2905.00,12948.00,0.00,22930.00
+2025,12,AA,American Airlines Network,JFK,"New York, NY: John F. Kennedy International",1246.00,346.00,96.92,7.92,95.71,0.59,144.86,22.00,1.00,31029.00,10077.00,923.00,5759.00,20.00,14250.00
+2025,12,AS,Alaska Airlines Network,JFK,"New York, NY: John F. Kennedy International",367.00,80.00,22.02,0.77,28.57,1.00,27.63,7.00,3.00,5191.00,1393.00,24.00,2353.00,119.00,1302.00
+2025,12,B6,JetBlue Airways,JFK,"New York, NY: John F. Kennedy International",2965.00,920.00,313.73,7.53,275.75,2.24,320.74,131.00,2.00,77913.00,26787.00,853.00,15723.00,765.00,33785.00
+2025,12,DL,Delta Air Lines Network,JFK,"New York, NY: John F. Kennedy International",2637.00,588.00,202.87,11.39,181.68,0.00,192.05,131.00,14.00,50965.00,20021.00,3668.00,12444.00,0.00,14832.00
+2025,12,F9,Frontier Airlines,JFK,"New York, NY: John F. Kennedy International",307.00,80.00,30.73,1.60,19.83,0.00,27.84,12.00,0.00,5844.00,1968.00,100.00,1153.00,0.00,2623.00
+2025,12,HA,Hawaiian Airlines Network,JFK,"New York, NY: John F. Kennedy International",31.00,11.00,4.95,1.00,0.00,0.00,5.05,0.00,0.00,655.00,338.00,34.00,0.00,0.00,283.00
+2025,12,YX,Republic Airline,JFK,"New York, NY: John F. Kennedy International",1299.00,358.00,82.59,21.44,140.98,1.17,111.82,46.00,2.00,26239.00,6224.00,2573.00,8599.00,140.00,8703.00
+2025,11,9E,Endeavor Air Inc.,JFK,"New York, NY: John F. Kennedy International",1739.00,334.00,68.91,10.77,114.34,0.00,139.98,57.00,1.00,33169.00,8832.00,1984.00,8983.00,0.00,13370.00
+2025,11,AA,American Airlines Network,JFK,"New York, NY: John F. Kennedy International",1237.00,282.00,103.31,2.82,88.52,0.00,87.34,20.00,4.00,21416.00,6531.00,263.00,4402.00,0.00,10220.00
+2025,11,AS,Alaska Airlines Network,JFK,"New York, NY: John F. Kennedy International",332.00,55.00,12.01,2.03,26.46,1.00,13.51,7.00,10.00,3039.00,739.00,118.00,1401.00,135.00,646.00
+2025,11,B6,JetBlue Airways,JFK,"New York, NY: John F. Kennedy International",2905.00,607.00,208.77,2.13,180.42,3.05,212.63,129.00,3.00,47018.00,14952.00,289.00,11030.00,92.00,20655.00
+2025,11,DL,Delta Air Lines Network,JFK,"New York, NY: John F. Kennedy International",2547.00,433.00,142.90,6.11,162.21,0.00,121.78,23.00,7.00,33043.00,13503.00,583.00,9194.00,0.00,9763.00
+2025,11,F9,Frontier Airlines,JFK,"New York, NY: John F. Kennedy International",298.00,53.00,18.72,1.00,14.77,0.00,18.51,5.00,0.00,4802.00,2734.00,116.00,527.00,0.00,1425.00
+2025,11,HA,Hawaiian Airlines Network,JFK,"New York, NY: John F. Kennedy International",30.00,5.00,2.00,0.00,0.00,0.00,3.00,0.00,0.00,273.00,130.00,0.00,0.00,0.00,143.00
+2025,11,YX,Republic Airline,JFK,"New York, NY: John F. Kennedy International",1271.00,228.00,62.68,4.41,78.85,0.00,82.07,60.00,4.00,14221.00,3385.00,496.00,4637.00,0.00,5703.00
+2025,10,F9,Frontier Airlines,JFK,"New York, NY: John F. Kennedy International",301.00,45.00,12.62,0.16,13.67,0.00,18.55,0.00,2.00,3832.00,919.00,9.00,578.00,0.00,2326.00
+2025,10,HA,Hawaiian Airlines Network,JFK,"New York, NY: John F. Kennedy International",31.00,6.00,3.34,0.00,0.00,0.43,2.23,0.00,0.00,292.00,215.00,0.00,0.00,16.00,61.00
+2025,10,9E,Endeavor Air Inc.,JFK,"New York, NY: John F. Kennedy International",1857.00,324.00,47.12,12.68,152.01,0.00,112.19,36.00,2.00,31431.00,6733.00,1767.00,13703.00,0.00,9228.00
+2025,10,AA,American Airlines Network,JFK,"New York, NY: John F. Kennedy International",1239.00,283.00,93.13,5.09,101.31,0.72,82.75,14.00,6.00,26813.00,9623.00,691.00,7751.00,45.00,8703.00
+2025,10,AS,Alaska Airlines Network,JFK,"New York, NY: John F. Kennedy International",339.00,80.00,22.82,2.74,47.52,0.00,6.92,5.00,4.00,3998.00,1100.00,559.00,2103.00,0.00,236.00
+2025,10,B6,JetBlue Airways,JFK,"New York, NY: John F. Kennedy International",2976.00,591.00,167.01,5.95,230.13,0.87,187.04,45.00,11.00,48536.00,13554.00,429.00,17424.00,16.00,17113.00
+2025,10,DL,Delta Air Lines Network,JFK,"New York, NY: John F. Kennedy International",2641.00,432.00,121.74,8.96,190.85,0.96,109.49,35.00,12.00,39492.00,12577.00,1443.00,15764.00,88.00,9620.00
+2025,10,YX,Republic Airline,JFK,"New York, NY: John F. Kennedy International",1362.00,227.00,37.42,5.18,105.56,1.00,77.84,30.00,2.00,18927.00,2763.00,902.00,8571.00,45.00,6646.00
+2025,9,9E,Endeavor Air Inc.,JFK,"New York, NY: John F. Kennedy International",1816.00,223.00,61.86,5.11,73.48,0.00,82.55,23.00,1.00,22659.00,8819.00,565.00,6893.00,0.00,6382.00
+2025,9,AA,American Airlines Network,JFK,"New York, NY: John F. Kennedy International",1129.00,196.00,62.51,10.85,58.26,1.73,62.64,7.00,7.00,16008.00,5351.00,1312.00,2875.00,71.00,6399.00
+2025,9,AS,Alaska Airlines Network,JFK,"New York, NY: John F. Kennedy International",300.00,88.00,11.35,0.74,64.20,1.00,10.71,4.00,4.00,3175.00,553.00,86.00,2035.00,16.00,485.00
+2025,9,B6,JetBlue Airways,JFK,"New York, NY: John F. Kennedy International",2845.00,422.00,135.75,9.73,120.00,5.52,151.00,24.00,8.00,33693.00,12429.00,756.00,6615.00,182.00,13711.00
+2025,9,DL,Delta Air Lines Network,JFK,"New York, NY: John F. Kennedy International",2560.00,295.00,97.99,11.50,99.00,0.00,86.51,5.00,15.00,21273.00,8196.00,863.00,5326.00,0.00,6888.00
+2025,9,F9,Frontier Airlines,JFK,"New York, NY: John F. Kennedy International",290.00,41.00,19.17,0.36,8.46,0.00,13.01,0.00,0.00,2531.00,1012.00,14.00,238.00,0.00,1267.00
+2025,9,HA,Hawaiian Airlines Network,JFK,"New York, NY: John F. Kennedy International",30.00,7.00,4.52,0.00,0.00,0.88,1.61,0.00,0.00,212.00,143.00,0.00,0.00,21.00,48.00
+2025,9,YX,Republic Airline,JFK,"New York, NY: John F. Kennedy International",1414.00,214.00,47.32,8.94,82.43,0.49,74.82,20.00,2.00,17777.00,3057.00,1817.00,6910.00,14.00,5979.00
+2025,8,HA,Hawaiian Airlines Network,JFK,"New York, NY: John F. Kennedy International",31.00,6.00,4.61,0.00,0.00,0.03,1.36,0.00,0.00,267.00,181.00,0.00,0.00,2.00,84.00
+2025,8,YX,Republic Airline,JFK,"New York, NY: John F. Kennedy International",1362.00,238.00,51.16,9.17,125.80,1.18,50.68,22.00,0.00,15477.00,2998.00,686.00,8292.00,63.00,3438.00
+2025,8,9E,Endeavor Air Inc.,JFK,"New York, NY: John F. Kennedy International",1920.00,271.00,57.00,18.01,96.29,0.00,99.70,28.00,0.00,29372.00,7596.00,2342.00,10792.00,0.00,8642.00
+2025,8,AA,American Airlines Network,JFK,"New York, NY: John F. Kennedy International",1134.00,276.00,83.55,15.91,84.97,0.68,90.89,10.00,5.00,25738.00,7574.00,1353.00,6392.00,31.00,10388.00
+2025,8,AS,Alaska Airlines Network,JFK,"New York, NY: John F. Kennedy International",329.00,110.00,19.36,3.63,69.78,0.59,16.64,3.00,2.00,5675.00,1127.00,501.00,2968.00,13.00,1066.00
+2025,8,B6,JetBlue Airways,JFK,"New York, NY: John F. Kennedy International",3293.00,734.00,229.72,26.42,220.71,2.21,254.94,32.00,7.00,63133.00,21163.00,1509.00,15056.00,73.00,25332.00
+2025,8,DL,Delta Air Lines Network,JFK,"New York, NY: John F. Kennedy International",2654.00,446.00,143.60,22.91,154.52,0.00,124.97,24.00,7.00,43593.00,17113.00,1831.00,13388.00,0.00,11261.00
+2025,8,F9,Frontier Airlines,JFK,"New York, NY: John F. Kennedy International",309.00,74.00,23.01,2.06,22.10,0.00,26.83,1.00,0.00,4681.00,1170.00,106.00,1672.00,0.00,1733.00
+2025,7,YX,Republic Airline,JFK,"New York, NY: John F. Kennedy International",1309.00,315.00,64.81,16.52,151.45,0.00,82.22,142.00,5.00,27101.00,4858.00,2113.00,13283.00,0.00,6847.00
+2025,7,HA,Hawaiian Airlines Network,JFK,"New York, NY: John F. Kennedy International",31.00,7.00,4.74,0.69,0.00,0.00,1.57,0.00,0.00,149.00,110.00,11.00,0.00,0.00,28.00
+2025,7,9E,Endeavor Air Inc.,JFK,"New York, NY: John F. Kennedy International",1925.00,442.00,87.92,19.39,198.75,0.00,135.93,268.00,2.00,49167.00,10998.00,2208.00,21214.00,0.00,14747.00
+2025,7,AA,American Airlines Network,JFK,"New York, NY: John F. Kennedy International",1234.00,403.00,76.01,18.27,193.74,0.37,114.61,56.00,16.00,43053.00,10163.00,1483.00,17803.00,25.00,13579.00
+2025,7,AS,Alaska Airlines Network,JFK,"New York, NY: John F. Kennedy International",341.00,157.00,20.00,4.33,105.62,0.40,26.65,15.00,5.00,9707.00,1284.00,513.00,6331.00,6.00,1573.00
+2025,7,B6,JetBlue Airways,JFK,"New York, NY: John F. Kennedy International",3362.00,1048.00,265.92,18.81,416.91,0.89,345.47,289.00,28.00,117111.00,36642.00,1496.00,38731.00,81.00,40161.00
+2025,7,DL,Delta Air Lines Network,JFK,"New York, NY: John F. Kennedy International",2671.00,753.00,201.57,24.38,357.69,1.84,167.51,98.00,33.00,66556.00,21128.00,2566.00,25933.00,54.00,16875.00
+2025,7,F9,Frontier Airlines,JFK,"New York, NY: John F. Kennedy International",309.00,103.00,37.82,1.00,33.96,0.00,30.23,6.00,1.00,5999.00,2246.00,28.00,1524.00,0.00,2201.00
+2025,6,9E,Endeavor Air Inc.,JFK,"New York, NY: John F. Kennedy International",1861.00,489.00,88.79,22.32,218.26,0.00,159.63,167.00,1.00,51729.00,10038.00,2790.00,22372.00,0.00,16529.00
+2025,6,AA,American Airlines Network,JFK,"New York, NY: John F. Kennedy International",1191.00,388.00,88.07,15.01,177.93,0.00,106.99,25.00,2.00,34653.00,7389.00,1348.00,12759.00,0.00,13157.00
+2025,6,AS,Alaska Airlines Network,JFK,"New York, NY: John F. Kennedy International",330.00,142.00,17.82,4.89,90.60,0.00,28.69,7.00,0.00,9726.00,1311.00,707.00,5910.00,0.00,1798.00
+2025,6,B6,JetBlue Airways,JFK,"New York, NY: John F. Kennedy International",3130.00,951.00,234.12,18.93,408.36,0.42,289.17,41.00,17.00,83543.00,21434.00,1939.00,28904.00,19.00,31247.00
+2025,6,DL,Delta Air Lines Network,JFK,"New York, NY: John F. Kennedy International",2599.00,755.00,197.04,32.75,351.14,1.00,173.07,37.00,16.00,68059.00,21551.00,3287.00,25826.00,27.00,17368.00
+2025,6,F9,Frontier Airlines,JFK,"New York, NY: John F. Kennedy International",298.00,86.00,32.69,2.85,29.00,0.00,21.45,9.00,1.00,6693.00,2719.00,297.00,1467.00,0.00,2210.00
+2025,6,HA,Hawaiian Airlines Network,JFK,"New York, NY: John F. Kennedy International",30.00,3.00,2.86,0.00,0.14,0.00,0.00,0.00,0.00,215.00,205.00,0.00,10.00,0.00,0.00
+2025,6,YX,Republic Airline,JFK,"New York, NY: John F. Kennedy International",1263.00,353.00,70.57,12.05,183.82,0.00,86.55,88.00,2.00,27502.00,5103.00,1470.00,12830.00,0.00,8099.00
+2025,5,9E,Endeavor Air Inc.,JFK,"New York, NY: John F. Kennedy International",1900.00,475.00,91.34,17.86,193.27,0.00,172.53,78.00,2.00,43600.00,9448.00,2037.00,15439.00,0.00,16676.00
+2025,5,AA,American Airlines Network,JFK,"New York, NY: John F. Kennedy International",1224.00,364.00,85.74,15.67,185.37,3.07,74.15,6.00,5.00,31517.00,9133.00,1427.00,11866.00,206.00,8885.00
+2025,5,AS,Alaska Airlines Network,JFK,"New York, NY: John F. Kennedy International",341.00,141.00,16.68,3.40,107.41,0.00,13.51,2.00,1.00,7027.00,947.00,506.00,4915.00,0.00,659.00
+2025,5,B6,JetBlue Airways,JFK,"New York, NY: John F. Kennedy International",3184.00,808.00,195.78,17.48,359.41,0.88,234.44,16.00,5.00,64684.00,13242.00,1341.00,26012.00,43.00,24046.00
+2025,5,DL,Delta Air Lines Network,JFK,"New York, NY: John F. Kennedy International",2657.00,629.00,159.34,23.55,302.21,1.00,142.90,5.00,11.00,47372.00,16382.00,2920.00,17421.00,72.00,10577.00
+2025,5,F9,Frontier Airlines,JFK,"New York, NY: John F. Kennedy International",278.00,84.00,30.17,4.67,26.31,0.00,22.86,0.00,0.00,6631.00,3304.00,267.00,1246.00,0.00,1814.00
+2025,5,HA,Hawaiian Airlines Network,JFK,"New York, NY: John F. Kennedy International",31.00,12.00,10.75,1.00,0.00,0.00,0.25,0.00,0.00,516.00,472.00,26.00,0.00,0.00,18.00
+2025,5,OO,SkyWest Airlines Inc.,JFK,"New York, NY: John F. Kennedy International",30.00,12.00,3.18,2.39,6.42,0.00,0.00,0.00,1.00,670.00,229.00,66.00,375.00,0.00,0.00
+2025,5,YX,Republic Airline,JFK,"New York, NY: John F. Kennedy International",1271.00,340.00,63.44,5.82,173.39,1.84,95.50,17.00,0.00,25180.00,4192.00,482.00,13007.00,74.00,7425.00
+2025,4,HA,Hawaiian Airlines Network,JFK,"New York, NY: John F. Kennedy International",30.00,17.00,14.09,0.00,0.81,1.19,0.90,0.00,0.00,616.00,425.00,0.00,56.00,24.00,111.00
+2025,4,OO,SkyWest Airlines Inc.,JFK,"New York, NY: John F. Kennedy International",152.00,35.00,19.33,2.97,12.71,0.00,0.00,2.00,0.00,1843.00,1156.00,132.00,555.00,0.00,0.00
+2025,4,9E,Endeavor Air Inc.,JFK,"New York, NY: John F. Kennedy International",1642.00,277.00,58.43,10.84,89.87,0.86,117.00,14.00,1.00,22735.00,6152.00,1486.00,4829.00,155.00,10113.00
+2025,4,AA,American Airlines Network,JFK,"New York, NY: John F. Kennedy International",1137.00,233.00,61.94,7.54,87.12,0.00,76.40,8.00,3.00,18334.00,4271.00,435.00,3334.00,0.00,10294.00
+2025,4,AS,Alaska Airlines Network,JFK,"New York, NY: John F. Kennedy International",338.00,70.00,13.29,0.55,44.76,0.00,11.40,1.00,1.00,3047.00,906.00,22.00,1751.00,0.00,368.00
+2025,4,B6,JetBlue Airways,JFK,"New York, NY: John F. Kennedy International",2985.00,518.00,156.20,2.64,194.35,0.41,164.41,13.00,4.00,33327.00,8938.00,603.00,9530.00,7.00,14249.00
+2025,4,DL,Delta Air Lines Network,JFK,"New York, NY: John F. Kennedy International",2474.00,410.00,155.15,9.09,131.37,0.34,114.05,10.00,6.00,30971.00,17755.00,1081.00,4652.00,40.00,7443.00
+2025,4,F9,Frontier Airlines,JFK,"New York, NY: John F. Kennedy International",231.00,63.00,17.19,1.57,25.40,0.00,18.84,0.00,0.00,4987.00,1488.00,442.00,1118.00,0.00,1939.00
+2025,4,YX,Republic Airline,JFK,"New York, NY: John F. Kennedy International",1280.00,213.00,62.96,8.92,104.41,0.14,36.56,3.00,2.00,13248.00,4632.00,659.00,5148.00,19.00,2790.00
+2025,3,HA,Hawaiian Airlines Network,JFK,"New York, NY: John F. Kennedy International",31.00,9.00,6.46,1.00,0.22,0.00,1.31,0.00,0.00,758.00,505.00,107.00,24.00,0.00,122.00
+2025,3,OO,SkyWest Airlines Inc.,JFK,"New York, NY: John F. Kennedy International",149.00,36.00,21.73,5.12,9.16,0.00,0.00,0.00,0.00,3265.00,1917.00,468.00,880.00,0.00,0.00
+2025,3,YX,Republic Airline,JFK,"New York, NY: John F. Kennedy International",1332.00,228.00,56.98,9.17,114.07,0.00,47.78,16.00,3.00,16584.00,4120.00,1100.00,7775.00,0.00,3589.00
+2025,3,9E,Endeavor Air Inc.,JFK,"New York, NY: John F. Kennedy International",1622.00,270.00,54.69,10.03,111.05,0.00,94.23,28.00,4.00,25055.00,6027.00,1587.00,10287.00,0.00,7154.00
+2025,3,AA,American Airlines Network,JFK,"New York, NY: John F. Kennedy International",1210.00,275.00,73.62,7.13,114.23,1.56,78.45,6.00,13.00,24890.00,8706.00,858.00,7104.00,57.00,8165.00
+2025,3,AS,Alaska Airlines Network,JFK,"New York, NY: John F. Kennedy International",319.00,101.00,17.00,1.69,70.61,0.00,11.71,0.00,2.00,5908.00,1536.00,203.00,3270.00,0.00,899.00
+2025,3,B6,JetBlue Airways,JFK,"New York, NY: John F. Kennedy International",3025.00,634.00,196.07,8.18,204.78,0.00,224.97,28.00,8.00,57492.00,16663.00,973.00,16313.00,0.00,23543.00
+2025,3,DL,Delta Air Lines Network,JFK,"New York, NY: John F. Kennedy International",2476.00,541.00,151.83,11.58,247.11,0.00,130.48,16.00,13.00,45883.00,15680.00,3155.00,16042.00,0.00,11006.00
+2025,3,F9,Frontier Airlines,JFK,"New York, NY: John F. Kennedy International",191.00,54.00,19.34,0.53,20.73,0.00,13.40,2.00,0.00,3684.00,1356.00,73.00,833.00,0.00,1422.00
+2025,2,9E,Endeavor Air Inc.,JFK,"New York, NY: John F. Kennedy International",1246.00,273.00,35.18,13.77,115.23,1.00,107.82,48.00,1.00,20840.00,3353.00,945.00,8372.00,55.00,8115.00
+2025,2,AA,American Airlines Network,JFK,"New York, NY: John F. Kennedy International",1090.00,206.00,61.40,1.84,75.29,0.96,66.51,23.00,5.00,17523.00,5854.00,55.00,3997.00,24.00,7593.00
+2025,2,AS,Alaska Airlines Network,JFK,"New York, NY: John F. Kennedy International",219.00,42.00,11.75,4.60,19.83,1.00,4.81,4.00,1.00,2081.00,575.00,333.00,907.00,21.00,245.00
+2025,2,B6,JetBlue Airways,JFK,"New York, NY: John F. Kennedy International",2626.00,573.00,145.80,5.36,171.81,0.92,249.11,57.00,0.00,51360.00,13233.00,1286.00,11314.00,77.00,25450.00
+2025,2,DL,Delta Air Lines Network,JFK,"New York, NY: John F. Kennedy International",2152.00,418.00,120.44,10.62,138.78,0.00,148.16,10.00,3.00,34399.00,12248.00,2812.00,8487.00,0.00,10852.00
+2025,2,F9,Frontier Airlines,JFK,"New York, NY: John F. Kennedy International",168.00,27.00,10.46,0.73,5.43,0.00,10.37,2.00,0.00,1639.00,799.00,47.00,139.00,0.00,654.00
+2025,2,HA,Hawaiian Airlines Network,JFK,"New York, NY: John F. Kennedy International",28.00,5.00,4.00,0.00,1.00,0.00,0.00,0.00,0.00,199.00,159.00,0.00,40.00,0.00,0.00
+2025,2,OO,SkyWest Airlines Inc.,JFK,"New York, NY: John F. Kennedy International",112.00,23.00,13.75,4.26,4.99,0.00,0.00,1.00,1.00,1257.00,625.00,276.00,356.00,0.00,0.00
+2025,2,YX,Republic Airline,JFK,"New York, NY: John F. Kennedy International",1458.00,268.00,61.95,10.76,101.20,0.00,94.09,62.00,1.00,19228.00,4695.00,1352.00,6807.00,0.00,6374.00
+2025,1,HA,Hawaiian Airlines Network,JFK,"New York, NY: John F. Kennedy International",31.00,13.00,10.49,1.00,0.97,0.00,0.53,0.00,0.00,805.00,609.00,123.00,34.00,0.00,39.00
+2025,1,OO,SkyWest Airlines Inc.,JFK,"New York, NY: John F. Kennedy International",132.00,31.00,17.80,6.83,6.37,0.00,0.00,4.00,0.00,1431.00,805.00,301.00,325.00,0.00,0.00
+2025,1,9E,Endeavor Air Inc.,JFK,"New York, NY: John F. Kennedy International",1273.00,262.00,54.86,12.97,85.66,0.00,108.51,29.00,0.00,24190.00,6559.00,2350.00,4379.00,0.00,10902.00
+2025,1,AA,American Airlines Network,JFK,"New York, NY: John F. Kennedy International",1195.00,180.00,55.02,5.71,49.28,0.36,69.62,9.00,6.00,14175.00,3789.00,543.00,2914.00,28.00,6901.00
+2025,1,AS,Alaska Airlines Network,JFK,"New York, NY: John F. Kennedy International",225.00,30.00,9.76,0.00,14.47,0.00,5.77,0.00,0.00,1203.00,513.00,0.00,440.00,0.00,250.00
+2025,1,B6,JetBlue Airways,JFK,"New York, NY: John F. Kennedy International",2578.00,481.00,160.02,3.95,132.73,0.54,183.76,43.00,2.00,34108.00,10729.00,678.00,5992.00,18.00,16691.00
+2025,1,DL,Delta Air Lines Network,JFK,"New York, NY: John F. Kennedy International",2386.00,432.00,147.85,14.46,135.54,0.00,134.15,27.00,7.00,39187.00,18324.00,3672.00,5970.00,0.00,11221.00
+2025,1,F9,Frontier Airlines,JFK,"New York, NY: John F. Kennedy International",186.00,35.00,18.77,0.00,9.41,0.00,6.82,4.00,0.00,2539.00,1510.00,0.00,339.00,0.00,690.00
+2025,1,YX,Republic Airline,JFK,"New York, NY: John F. Kennedy International",1592.00,242.00,65.45,15.16,99.58,1.00,60.81,61.00,2.00,15937.00,5848.00,1320.00,4421.00,88.00,4260.00
