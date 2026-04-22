@@ -52,6 +52,8 @@ This repository contains a reproducible data-preparation and descriptive-analysi
 │   └── summary
 ├── scripts
 │   └── build_operational_risk_assets.py
+├── templates
+│   └── hku_beamer
 ├── environment.yml
 └── README.md
 ```
@@ -72,6 +74,8 @@ This repository contains a reproducible data-preparation and descriptive-analysi
   Bilingual LaTeX Beamer source files and compiled PDFs for the 4-minute presentation segment, separated into `zh/` and `en/` and using the HKU Beamer template style.
 - `reports/summary/jfk_descriptive_analysis_summary.md`
   A short written summary of cleaning results and key descriptive findings.
+- `templates/hku_beamer/`
+  Source files from the HKU Beamer template used as the presentation style reference.
 
 - `data/raw/`
   原始 BTS 数据与官方字段说明文件。
@@ -87,6 +91,8 @@ This repository contains a reproducible data-preparation and descriptive-analysi
   约 4 分钟汇报内容的中英文 LaTeX Beamer 源文件与已编译 PDF，已按 `zh/` 与 `en/` 分开存放，当前使用 HKU Beamer 模板风格。
 - `reports/summary/jfk_descriptive_analysis_summary.md`
   数据清洗结果与关键发现的简要文字总结。
+- `templates/hku_beamer/`
+  HKU Beamer 模板源文件，用作当前汇报 slides 的模板风格参考。
 
 ## Quick start | 快速开始
 
