@@ -1,0 +1,148 @@
+\documentclass[UTF8,fontset=fandol,11pt]{ctexart}
+
+\usepackage[a4paper,margin=2.35cm]{geometry}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{hyperref}
+
+\definecolor{chapterblue}{HTML}{2F5F85}
+\definecolor{softgray}{HTML}{F5F6F7}
+\definecolor{textgray}{HTML}{333333}
+
+\graphicspath{{../../charts/}}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=chapterblue,
+  urlcolor=chapterblue,
+  citecolor=chapterblue
+}
+\captionsetup{font=small,labelfont=bf}
+\setlist[itemize]{leftmargin=1.6em,itemsep=0.15em}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.35em}
+\renewcommand{\arraystretch}{1.18}
+
+\title{\textbf{第五部分：数据准备、描述性分析与建模交接}}
+\author{DASE7337 Group Project: Airline Delay and Cancellation Operational Risk}
+\date{April 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+本章节承接前文对 JFK 航班延误运营风险的行业背景、风险因素、SWOT 与 PEST 分析，进一步说明本项目如何把 BTS On-Time Performance 原始数据整理成可以直接服务于后续模型构建的数据资产。章节重点不在于单纯展示清洗结果，而是解释每一步处理背后的风险管理逻辑：为什么要统一字段口径，为什么要删除无实际运营量的记录，为什么要同时保留频率变量、严重度变量和原因分类变量，以及这些输出如何支撑后续的频率模型、严重度模型、状态划分与 aggregate risk 模拟。
+\end{abstract}
+
+\setcounter{section}{4}
+\section{数据准备与描述性分析}
+
+\subsection{章节定位}
+前一章节已经说明，JFK 的航班延误风险既包含外部冲击，例如天气与空域约束，也包含内部运营链条中的排班、地面服务和飞机周转问题。因此，本章节的数据工作有一个明确目标：把原始运营记录转化为一组清晰、稳定、可复现的风险度量。换句话说，数据清洗不是技术性的附属步骤，而是后续建模能否成立的基础。
+
+本项目使用的数据来自 BTS On-Time Performance 中的 Airline Delay Cause 数据表，样本限定为 2020 年 1 月至 2025 年 12 月 JFK 到达航班的航司月度记录。原始数据共 570 条记录，清洗后保留 569 条。最终数据覆盖 72 个机场月份、12 家航司、657,671 架次到达航班，并记录了 137,247 次 15 分钟以上到达延误、18,230 次取消、1,873 次改降或备降，以及 11,125,838 分钟到达延误。
+
+\subsection{数据处理流程}
+数据处理流程可以概括为四步。第一步是读取原始 CSV 与官方字段说明文件，确认字段与 BTS 定义一致。第二步是统一航司名称和机场名称，避免同一实体因为命名差异被拆成多个类别。第三步是把原始字段改写成更直观的变量名，例如将 \texttt{arr\_flights} 改为 \texttt{total\_arrival\_flights}，将 \texttt{arr\_del15} 改为 \texttt{delayed\_arrivals\_15\_plus}。第四步是建立核心清洗数据、字段字典、月度汇总、延误原因汇总和航司风险画像。
+
+\begin{table}[H]
+\centering
+\caption{数据清洗与样本覆盖情况}
+\begin{tabular}{lr}
+\toprule
+指标 & 数值 \\
+\midrule
+原始航司月份记录 & 570 \\
+清洗后航司月份记录 & 569 \\
+因总到达航班量缺失或为零而删除 & 1 \\
+因延误航班数超过总航班数而删除 & 0 \\
+覆盖年份 & 2020--2025 \\
+机场月份数量 & 72 \\
+航司数量 & 12 \\
+总到达航班量 & 657,671 \\
+总延误分钟 & 11,125,838 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+这里最重要的清洗规则有两条。第一，删除总到达航班量缺失或小于等于零的记录，因为这类记录无法形成有效的延误率、取消率或严重度指标。第二，检查延误航班数是否超过总到达航班量，这是一类明显的逻辑异常。当前样本没有出现第二类错误，但保留这一检查可以保证未来更新数据时流程仍然稳健。
+
+\subsection{变量设计与模型口径}
+清洗后的核心数据保留了三类变量。第一类是频率变量，例如到达航班量、15 分钟以上延误航班数、取消数和改降数。第二类是严重度变量，例如总到达延误分钟，以及 Airline、Weather、NAS、Security、Late Aircraft 五类原因对应的延误分钟。第三类是识别变量，包括年份、月份和航司名称。这一结构与后续 frequency--severity 建模框架直接对应。
+
+在航司月份层面，最基本的频率口径可以写为
+\[
+\mathrm{DelayRate}_{a,t} =
+\frac{\mathrm{DelayedArrivals}_{a,t}}{\mathrm{TotalArrivals}_{a,t}},
+\qquad
+\mathrm{CancellationRate}_{a,t} =
+\frac{\mathrm{CancelledArrivals}_{a,t}}{\mathrm{TotalArrivals}_{a,t}}.
+\]
+严重度口径则用平均每次延误分钟数表示：
+\[
+\mathrm{AverageSeverity}_{a,t} =
+\frac{\mathrm{TotalDelayMinutes}_{a,t}}{\mathrm{DelayedArrivals}_{a,t}}.
+\]
+当分母为零时，后续建模应把该航司月份视为没有可观测延误事件，而不是人为制造一个极端严重度数值。这样处理有助于把“是否发生事件”和“发生后损失多大”分开，正好对应运营风险中的频率与严重度分解。
+
+\subsection{描述性结果}
+图 \ref{fig:monthly-trend-zh} 展示了 2020 至 2025 年 JFK 月度延误和取消数量的变化。最高延误月份出现在 2023 年 7 月，当月 15 分钟以上延误达到 3,657 次，延误率为 32.69\%。最高取消月份则出现在 2020 年 3 月，当月取消 1,900 次，反映出疫情初期对航空运行的特殊冲击。这个结果提醒我们，延误与取消并不总是同步变化。延误更多体现运行压力和拥堵，取消则更容易受到外部突发事件和大规模计划调整影响。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.94\linewidth]{chart_1_monthly_trend.png}
+\caption{JFK 月度延误与取消趋势}
+\label{fig:monthly-trend-zh}
+\end{figure}
+
+从原因结构看，Airline 和 Late Aircraft 是最主要的延误分钟来源，分别占总延误分钟的 36.16\% 和 35.14\%。NAS 占 24.32\%，Weather 与 Security 合计不足 5\%。这与前文的风险识别形成呼应：天气虽然是航空风险叙事中非常直观的外部因素，但在该样本中，日常风险的主体仍然来自内部运行链条和系统拥堵。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\linewidth]{chart_2_delay_cause_breakdown.png}
+\caption{延误原因的分钟贡献结构}
+\label{fig:cause-breakdown-zh}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{主要延误原因占比}
+\begin{tabular}{lrr}
+\toprule
+原因 & 延误分钟 & 占比 \\
+\midrule
+Airline & 4,022,961 & 36.16\% \\
+Late Aircraft & 3,910,112 & 35.14\% \\
+NAS & 2,705,624 & 24.32\% \\
+Weather & 466,088 & 4.19\% \\
+Security & 21,053 & 0.19\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+图 \ref{fig:airline-profile-zh} 将航司层面的延误率、取消率与平均延误严重度放在同一张风险画像中。JetBlue Airways 的总延误分钟最高，Hawaiian Airlines 的延误率最高，而 Envoy Air 的平均延误严重度最高。这样的结果不应被解释为简单的“哪家航司最差”，因为不同航司的航班量、航线结构和样本规模不同。它更适合作为后续模型的分层视角，帮助我们识别哪些航司月份可能对尾部风险贡献更大。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.88\linewidth]{chart_3_airline_risk_profile.png}
+\caption{航司风险画像}
+\label{fig:airline-profile-zh}
+\end{figure}
+
+\subsection{对后续模型构建的帮助}
+这一部分的数据工作对后续模型有三方面帮助。第一，清洗后的核心数据把频率变量和严重度变量分开，使后续可以分别拟合 Poisson、Negative Binomial、Lognormal 或 Weibull 等候选分布。第二，延误原因汇总把 BTS 的数据库口径转化为课程中的运营风险语言，后续可以把 Airline 与 Late Aircraft 合并为内部运营链条风险，把 NAS 视为系统约束风险，把 Weather 与 Security 视为外部冲击风险。第三，月度汇总保留了连续时间顺序，后续可以进一步定义 normal 与 disrupted 两类运行状态，并估计状态转移关系。
+
+因此，本章节的核心贡献不是某一个单独图表，而是把原始航班运行数据整理成一套可解释、可复现、可建模的风险数据底座。它让前文的管理分析能够落到量化指标上，也让后文的统计模型不只是形式上的分布拟合，而是有清楚业务含义的运营风险分析。
+
+\subsection{局限与下一步}
+本阶段仍有两点局限。第一，数据粒度是航司月份层面，不能观察单个航班、机场时段或具体天气事件，因此短时拥堵与航班链式传播只能通过月度汇总间接体现。第二，延误原因由 BTS 按规则分摊，部分原因计数字段可能出现小数，这意味着它们更像风险归因指标，而不是严格的独立事件计数。后续建模在使用这些变量时，需要明确说明这一口径。
+
+尽管存在这些限制，当前数据集已经足以支撑课程项目要求中的定量分析部分。后续章节可以在本章输出的基础上，继续完成频率分布比较、严重度分布比较、状态依赖建模和 aggregate risk 情景模拟。
+
+\end{document}

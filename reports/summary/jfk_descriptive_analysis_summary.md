@@ -20,7 +20,8 @@
 
 - The core cleaned dataset keeps the same field names as the earlier single-year workflow.
 - The monthly summary includes `year`, `year_month`, and `period_start` to support the current multi-year timeline.
-- The static charts and offline dashboard were refreshed with a softer presentation palette and system-safe fonts for consistent PNG and SVG rendering.
+- The static charts and offline dashboard use a softer presentation palette and system-safe fonts for consistent PNG and SVG rendering.
+- Chart 2 is now exported as a compact horizontal layout with transparent PNG and SVG backgrounds for cleaner report and slide placement.
 
 ## Modeling handoff note
 

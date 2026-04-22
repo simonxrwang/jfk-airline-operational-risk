@@ -1,0 +1,175 @@
+\documentclass[UTF8,fontset=fandol,10pt,aspectratio=169]{ctexbeamer}
+
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{utopia}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{hyperref}
+
+\usetheme{CambridgeUS}
+\usecolortheme{dolphin}
+
+\definecolor{myNewColorA}{RGB}{118,193,188}
+\definecolor{myNewColorB}{RGB}{106,172,150}
+\definecolor{myNewColorC}{RGB}{94,150,218}
+\setbeamercolor*{palette primary}{bg=myNewColorC}
+\setbeamercolor*{palette secondary}{bg=myNewColorB, fg=white}
+\setbeamercolor*{palette tertiary}{bg=myNewColorA, fg=white}
+\setbeamercolor*{titlelike}{fg=myNewColorA}
+\setbeamercolor*{title}{bg=myNewColorA, fg=white}
+\setbeamercolor*{item}{fg=myNewColorA}
+\setbeamercolor*{caption name}{fg=myNewColorA}
+\usefonttheme{professionalfonts}
+\setbeamertemplate{navigation symbols}{}
+\graphicspath{{../../charts/}{../shared/figures/}}
+
+\title[The University of Hong Kong]{数据准备与描述性分析}
+\subtitle{JFK 航班延误与取消运营风险项目}
+\author[DASE7337 Group Project]{DASE7337 Group Project}
+\institute[HKU]{The University of Hong Kong}
+\date[April 2026]{DASE7337 Group Presentation \\ April 2026}
+\titlegraphic{\includegraphics[height=1.5cm]{hkulogo.png}}
+
+\setbeamerfont{title}{size=\large}
+\setbeamerfont{subtitle}{size=\small}
+\setbeamerfont{author}{size=\small}
+\setbeamerfont{date}{size=\small}
+\setbeamerfont{institute}{size=\small}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{本章在小组报告中的位置}
+  % Speaking cue: 30--35 seconds.
+  \begin{itemize}
+    \item 前一章已经完成行业背景、核心风险因素、SWOT 与 PEST 分析。
+    \item 本章负责把 BTS 原始数据整理成可建模的风险数据资产。
+    \item 核心问题不是“画了哪些图”，而是“哪些数据口径能支撑后续模型”。
+  \end{itemize}
+  \vspace{0.4em}
+  \begin{block}{建模交接目标}
+  将航司月份记录拆分为频率变量、严重度变量和风险原因变量，为后续分布拟合、状态划分与 aggregate risk 模拟提供输入。
+  \end{block}
+\end{frame}
+
+\begin{frame}{数据范围与清洗结果}
+  % Speaking cue: 35--40 seconds.
+  \begin{columns}[T,totalwidth=\linewidth]
+    \begin{column}{0.48\linewidth}
+      \begin{table}
+      \small
+      \begin{tabular}{lr}
+      \toprule
+      指标 & 数值 \\
+      \midrule
+      原始记录 & 570 \\
+      清洗后记录 & 569 \\
+      覆盖月份 & 72 \\
+      覆盖航司 & 12 \\
+      总到达航班 & 657,671 \\
+      总延误分钟 & 11,125,838 \\
+      \bottomrule
+      \end{tabular}
+      \end{table}
+    \end{column}
+    \begin{column}{0.48\linewidth}
+      \begin{itemize}
+        \item 删除 1 条无实际到达航班量的记录。
+        \item 检查“延误航班数超过总航班数”的逻辑异常，当前样本为 0。
+        \item 统一航司名称，并把 BTS 字段改写为可读变量名。
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{变量设计：服务 frequency--severity 模型}
+  % Speaking cue: 40 seconds.
+  \begin{columns}[T,totalwidth=\linewidth]
+    \begin{column}{0.33\linewidth}
+      \textbf{频率变量}
+      \begin{itemize}
+        \item 总到达航班量
+        \item 15 分钟以上延误
+        \item 取消与改降
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.33\linewidth}
+      \textbf{严重度变量}
+      \begin{itemize}
+        \item 总延误分钟
+        \item 平均每次延误分钟
+        \item 分原因延误分钟
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.33\linewidth}
+      \textbf{风险分类变量}
+      \begin{itemize}
+        \item Airline 与 Late Aircraft
+        \item NAS
+        \item Weather 与 Security
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \vspace{0.8em}
+  \centering
+  \large
+  数据结构先拆清楚，后续模型才可以分别回答“发生多频繁”和“发生后多严重”。
+\end{frame}
+
+\begin{frame}{月度趋势：延误与取消并不完全同步}
+  % Speaking cue: 45 seconds.
+  \centering
+  \includegraphics[width=0.88\linewidth]{chart_1_monthly_trend.png}
+  \vspace{-0.3em}
+  \begin{itemize}
+    \item 最高延误月份：2023 年 7 月，3,657 次延误，延误率 32.69\%。
+    \item 最高取消月份：2020 年 3 月，1,900 次取消，体现疫情初期冲击。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{风险原因结构：内部链条是主导来源}
+  % Speaking cue: 45 seconds.
+  \centering
+  \includegraphics[width=0.86\linewidth]{chart_2_delay_cause_breakdown.png}
+  \vfill
+  \begin{minipage}{0.86\linewidth}
+    \centering\small
+    Airline 与 Late Aircraft 合计贡献约 71.3\% 的延误分钟，说明日常运营风险的主体不是单纯天气，而是航司内部运行链条和系统拥堵。
+  \end{minipage}
+\end{frame}
+
+\begin{frame}{航司风险画像与 dashboard 交接}
+  % Speaking cue: 45--50 seconds.
+  \begin{columns}[T,totalwidth=\linewidth]
+    \begin{column}{0.60\linewidth}
+      \includegraphics[width=\linewidth]{chart_3_airline_risk_profile.png}
+    \end{column}
+    \begin{column}{0.36\linewidth}
+      \begin{itemize}
+        \item JetBlue 的总延误分钟最高。
+        \item Hawaiian 的延误率最高。
+        \item Envoy Air 的平均延误严重度最高。
+        \item 离线 dashboard 可用于展示筛选、交互图表和数据表。
+      \end{itemize}
+      \vspace{0.3em}
+      \href{../../dashboard/jfk_operational_risk_dashboard.html}{打开项目 dashboard}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{结论：为什么这部分对后续模型重要}
+  % Speaking cue: 35--40 seconds.
+  \begin{enumerate}
+    \item 清洗后的核心数据让频率模型和严重度模型有明确输入。
+    \item 原因分类把 BTS 字段转化为课程中的 operational risk blocks。
+    \item 月度时间序列为 normal/disrupted 状态划分和 Markov 转移估计打基础。
+    \item 图表和 dashboard 让模型结果可以被业务语言解释，而不是停留在公式层面。
+  \end{enumerate}
+\end{frame}
+
+\end{document}

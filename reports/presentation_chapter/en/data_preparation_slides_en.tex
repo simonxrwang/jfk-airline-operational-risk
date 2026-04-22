@@ -1,0 +1,177 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage{xeCJK}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{utopia}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{hyperref}
+
+\usetheme{CambridgeUS}
+\usecolortheme{dolphin}
+
+\definecolor{myNewColorA}{RGB}{118,193,188}
+\definecolor{myNewColorB}{RGB}{106,172,150}
+\definecolor{myNewColorC}{RGB}{94,150,218}
+\setbeamercolor*{palette primary}{bg=myNewColorC}
+\setbeamercolor*{palette secondary}{bg=myNewColorB, fg=white}
+\setbeamercolor*{palette tertiary}{bg=myNewColorA, fg=white}
+\setbeamercolor*{titlelike}{fg=myNewColorA}
+\setbeamercolor*{title}{bg=myNewColorA, fg=white}
+\setbeamercolor*{item}{fg=myNewColorA}
+\setbeamercolor*{caption name}{fg=myNewColorA}
+\usefonttheme{professionalfonts}
+\setbeamertemplate{navigation symbols}{}
+\graphicspath{{../../charts/}{../shared/figures/}}
+
+\title[The University of Hong Kong]{Data Preparation and Descriptive Analysis}
+\subtitle{JFK Airline Delay and Cancellation Operational Risk}
+\author[DASE7337 Group Project]{DASE7337 Group Project}
+\institute[HKU]{The University of Hong Kong}
+\date[April 2026]{DASE7337 Group Presentation \\ April 2026}
+\titlegraphic{\includegraphics[height=1.5cm]{hkulogo.png}}
+
+\setbeamerfont{title}{size=\large}
+\setbeamerfont{subtitle}{size=\small}
+\setbeamerfont{author}{size=\small}
+\setbeamerfont{date}{size=\small}
+\setbeamerfont{institute}{size=\small}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Where This Chapter Fits}
+  % Speaking cue: 30--35 seconds.
+  \begin{itemize}
+    \item The previous chapter covers sector context, core risk factors, SWOT, and PEST.
+    \item This chapter converts BTS raw records into modeling-ready risk assets.
+    \item The key question is not only which charts we produced, but which data definitions can support the next models.
+  \end{itemize}
+  \vspace{0.4em}
+  \begin{block}{Modeling handoff}
+  The airline-month records are organized into frequency variables, severity variables, and delay-cause variables for distribution fitting, state classification, and aggregate risk simulation.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Data Scope and Cleaning Result}
+  % Speaking cue: 35--40 seconds.
+  \begin{columns}[T,totalwidth=\linewidth]
+    \begin{column}{0.48\linewidth}
+      \begin{table}
+      \small
+      \begin{tabular}{lr}
+      \toprule
+      Metric & Value \\
+      \midrule
+      Raw records & 570 \\
+      Clean records & 569 \\
+      Airport months & 72 \\
+      Airlines & 12 \\
+      Arrival flights & 657,671 \\
+      Delay minutes & 11,125,838 \\
+      \bottomrule
+      \end{tabular}
+      \end{table}
+    \end{column}
+    \begin{column}{0.48\linewidth}
+      \begin{itemize}
+        \item One non-operational record was removed.
+        \item Logical check: delayed arrivals must not exceed total arrivals.
+        \item Airline names were standardized and BTS fields were rewritten into readable analytical names.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Variable Design for Frequency--Severity Modeling}
+  % Speaking cue: 40 seconds.
+  \begin{columns}[T,totalwidth=\linewidth]
+    \begin{column}{0.33\linewidth}
+      \textbf{Frequency}
+      \begin{itemize}
+        \item Arrival flights
+        \item 15+ minute delays
+        \item Cancellations and diversions
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.33\linewidth}
+      \textbf{Severity}
+      \begin{itemize}
+        \item Total delay minutes
+        \item Average minutes per delay
+        \item Cause-specific minutes
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.33\linewidth}
+      \textbf{Risk Blocks}
+      \begin{itemize}
+        \item Airline and Late Aircraft
+        \item NAS
+        \item Weather and Security
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \vspace{0.8em}
+  \centering
+  \large
+  The cleaned structure lets later models ask separately: how often, and how severe?
+\end{frame}
+
+\begin{frame}{Monthly Trend: Delays and Cancellations Differ}
+  % Speaking cue: 45 seconds.
+  \centering
+  \includegraphics[width=0.88\linewidth]{chart_1_monthly_trend.png}
+  \vspace{-0.3em}
+  \begin{itemize}
+    \item Peak delay month: July 2023, with 3,657 delayed arrivals and a 32.69\% delay rate.
+    \item Peak cancellation month: March 2020, with 1,900 cancellations during the early pandemic shock.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Delay-Cause Structure: Internal Chain Dominates}
+  % Speaking cue: 45 seconds.
+  \centering
+  \includegraphics[width=0.86\linewidth]{chart_2_delay_cause_breakdown.png}
+  \vfill
+  \begin{minipage}{0.86\linewidth}
+    \centering\small
+    Airline and Late Aircraft jointly contribute about 71.3\% of delay minutes, so daily operational risk is driven mainly by the internal operating chain and system congestion, not only by weather.
+  \end{minipage}
+\end{frame}
+
+\begin{frame}{Airline Risk Profile and Dashboard Handoff}
+  % Speaking cue: 45--50 seconds.
+  \begin{columns}[T,totalwidth=\linewidth]
+    \begin{column}{0.60\linewidth}
+      \includegraphics[width=\linewidth]{chart_3_airline_risk_profile.png}
+    \end{column}
+    \begin{column}{0.36\linewidth}
+      \begin{itemize}
+        \item JetBlue has the largest total delay minutes.
+        \item Hawaiian has the highest delay rate.
+        \item Envoy Air has the highest average delay severity.
+        \item The offline dashboard supports filtering, interactive charts, and a readable data table.
+      \end{itemize}
+      \vspace{0.3em}
+      \href{../../dashboard/jfk_operational_risk_dashboard.html}{Open project dashboard}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Why This Matters for the Next Models}
+  % Speaking cue: 35--40 seconds.
+  \begin{enumerate}
+    \item The cleaned core dataset gives clear inputs for frequency and severity models.
+    \item Cause categories translate BTS fields into operational risk blocks.
+    \item The monthly time series supports normal/disrupted state classification and Markov transition estimation.
+    \item The charts and dashboard make the modeling story explainable in business language.
+  \end{enumerate}
+\end{frame}
+
+\end{document}

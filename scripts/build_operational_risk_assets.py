@@ -503,8 +503,8 @@ def apply_chart_style() -> None:
     sns.set_theme(
         style="whitegrid",
         rc={
-            "axes.facecolor": CHART_COLORS["sand"],
-            "figure.facecolor": CHART_COLORS["sand"],
+            "axes.facecolor": "none",
+            "figure.facecolor": "none",
             "grid.color": CHART_COLORS["grid"],
             "axes.edgecolor": CHART_COLORS["grid"],
             "axes.labelcolor": CHART_COLORS["slate"],
@@ -530,8 +530,11 @@ def apply_chart_style() -> None:
 
 
 def save_chart(fig: plt.Figure, filename: str, *, bbox_inches: str | None = "tight") -> None:
-    fig.savefig(CHART_DIR / f"{filename}.png", dpi=320, bbox_inches=bbox_inches)
-    fig.savefig(CHART_DIR / f"{filename}.svg", bbox_inches=bbox_inches)
+    fig.patch.set_alpha(0)
+    for axis in fig.axes:
+        axis.patch.set_alpha(0)
+    fig.savefig(CHART_DIR / f"{filename}.png", dpi=320, bbox_inches=bbox_inches, transparent=True)
+    fig.savefig(CHART_DIR / f"{filename}.svg", bbox_inches=bbox_inches, transparent=True)
     plt.close(fig)
 
 
@@ -599,52 +602,77 @@ def create_monthly_trend_chart(monthly_summary: pd.DataFrame) -> None:
 
 
 def create_delay_cause_chart(cause_summary: pd.DataFrame) -> None:
-    fig, ax = plt.subplots(figsize=(10, 8))
-    fig.subplots_adjust(left=0.08, right=0.92, top=0.84, bottom=0.08)
+    chart_data = cause_summary.sort_values("delay_minutes", ascending=True)
+    fig = plt.figure(figsize=(12.2, 4.6))
+    fig.subplots_adjust(left=0.06, right=0.97, top=0.86, bottom=0.14, wspace=0.18)
+    grid = fig.add_gridspec(1, 2, width_ratios=[0.88, 1.7])
+    donut_ax = fig.add_subplot(grid[0, 0])
+    bar_ax = fig.add_subplot(grid[0, 1])
+
     palette = [CAUSE_COLOR_MAP[cause] for cause in cause_summary["cause"]]
     total_delay_minutes = int(cause_summary["delay_minutes"].sum())
-    wedges, texts, autotexts = ax.pie(
+    _, _, autotexts = donut_ax.pie(
         cause_summary["delay_minutes"],
-        labels=cause_summary["cause"],
         colors=palette,
-        radius=0.85,
+        radius=0.9,
         startangle=110,
         counterclock=False,
-        autopct=lambda pct: f"{pct:.1f}%" if pct >= 3 else "",
-        pctdistance=0.74,
-        labeldistance=1.05,
+        autopct=lambda pct: f"{pct:.1f}%" if pct >= 5 else "",
+        pctdistance=0.72,
         wedgeprops={"width": 0.33, "edgecolor": "white", "linewidth": 2.4},
         textprops={"color": CHART_COLORS["slate"], "fontsize": 10, "fontweight": "bold"},
     )
 
     for autotext in autotexts:
         autotext.set_color("white")
-        autotext.set_fontsize(10)
+        autotext.set_fontsize(9.5)
         autotext.set_fontweight("bold")
 
-    ax.set_title("Chart 2. Delay Cause Breakdown\nby Share of Delay Minutes", fontsize=15, fontweight="bold", loc="center")
-    ax.text(
+    donut_ax.text(
         0,
-        0.08,
-        f"{total_delay_minutes:,}",
+        0.05,
+        f"{total_delay_minutes / 1_000_000:.2f}M",
         ha="center",
         va="center",
-        fontsize=20,
+        fontsize=18,
         fontweight="bold",
         color=CHART_COLORS["primary"],
     )
-    ax.text(
+    donut_ax.text(
         0,
-        -0.12,
-        "Total delay\nminutes",
+        -0.14,
+        "total delay\nminutes",
         ha="center",
         va="center",
-        fontsize=10,
+        fontsize=9.5,
         color=CHART_COLORS["slate"],
         linespacing=1.25,
     )
-    ax.set_aspect("equal", adjustable="box")
-    ax.set_anchor("C")
+    donut_ax.set_aspect("equal", adjustable="box")
+    donut_ax.set_title("Delay minutes", fontsize=11.5, fontweight="bold", color=CHART_COLORS["slate"], pad=8)
+
+    shares = chart_data["share_of_total_delay_minutes"]
+    bar_colors = [CAUSE_COLOR_MAP[cause] for cause in chart_data["cause"]]
+    bars = bar_ax.barh(chart_data["cause"], shares, color=bar_colors, height=0.58)
+    bar_ax.set_title("Chart 2. Delay Cause Breakdown by Share of Delay Minutes", fontsize=14.5, fontweight="bold", loc="left")
+    bar_ax.set_xlim(0, shares.max() * 1.24)
+    bar_ax.xaxis.set_major_formatter(PercentFormatter(1.0))
+    bar_ax.tick_params(axis="y", labelsize=10.5)
+    bar_ax.tick_params(axis="x", labelsize=9.5, colors=CHART_COLORS["slate"])
+    bar_ax.grid(axis="x", color=CHART_COLORS["grid"], linewidth=0.8, alpha=0.6)
+    bar_ax.set_axisbelow(True)
+    for bar, (_, row) in zip(bars, chart_data.iterrows(), strict=True):
+        x_position = bar.get_width()
+        bar_ax.text(
+            x_position + shares.max() * 0.025,
+            bar.get_y() + bar.get_height() / 2,
+            f"{row['share_of_total_delay_minutes']:.1%}  ({row['delay_minutes'] / 1_000_000:.2f}M min)",
+            va="center",
+            ha="left",
+            fontsize=10,
+            color=CHART_COLORS["slate"],
+        )
+    sns.despine(ax=bar_ax, left=True, bottom=False)
     save_chart(fig, "chart_2_delay_cause_breakdown")
 
 
@@ -1392,6 +1420,13 @@ def build_summary_markdown(
 - The largest delay-severity driver was {top_cause["cause"]}, contributing {top_cause["share_of_total_delay_minutes"]:.1%} of total delay minutes.
 - The highest delay-rate airline was {highest_delay_rate["airline_name"]} at {highest_delay_rate["delay_rate"]:.1%}.
 - The highest average delay severity was {highest_severity["airline_name"]} at {highest_severity["average_delay_minutes_per_delayed_flight"]:.1f} minutes per delayed flight.
+
+## Output update note
+
+- The core cleaned dataset keeps the same field names as the earlier single-year workflow.
+- The monthly summary includes `year`, `year_month`, and `period_start` to support the current multi-year timeline.
+- The static charts and offline dashboard use a softer presentation palette and system-safe fonts for consistent PNG and SVG rendering.
+- Chart 2 is now exported as a compact horizontal layout with transparent PNG and SVG backgrounds for cleaner report and slide placement.
 
 ## Modeling handoff note
 

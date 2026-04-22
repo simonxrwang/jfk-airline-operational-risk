@@ -1,0 +1,148 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=2.35cm]{geometry}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+\definecolor{chapterblue}{HTML}{2F5F85}
+\definecolor{textgray}{HTML}{333333}
+
+\graphicspath{{../../charts/}}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=chapterblue,
+  urlcolor=chapterblue,
+  citecolor=chapterblue
+}
+\captionsetup{font=small,labelfont=bf}
+\setlist[itemize]{leftmargin=1.6em,itemsep=0.15em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\renewcommand{\arraystretch}{1.18}
+
+\title{\textbf{Part 5: Data Preparation, Descriptive Analysis, and Modeling Handoff}}
+\author{DASE7337 Group Project: Airline Delay and Cancellation Operational Risk}
+\date{April 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This chapter follows the earlier discussion of JFK's aviation context, core delay factors, SWOT analysis, and PEST analysis. Its purpose is to explain how the BTS On-Time Performance data were transformed into modeling-ready operational risk assets. The emphasis is not only on what was cleaned, but also on why each cleaning decision matters: consistent field definitions, removal of non-operational records, separation of frequency and severity variables, and construction of descriptive outputs that support the later frequency, severity, state-dependent, and aggregate risk modeling stages.
+\end{abstract}
+
+\setcounter{section}{4}
+\section{Data Preparation and Descriptive Analysis}
+
+\subsection{Role of This Chapter}
+The previous chapter shows that flight delay risk at JFK is shaped by both external shocks, such as weather and airspace constraints, and internal operational frictions, such as aircraft rotation, ground handling, and airline scheduling. The role of this chapter is to turn that qualitative risk language into a stable quantitative dataset. In that sense, data cleaning is not a background technical step. It is the bridge between managerial risk identification and the statistical models used later in the project.
+
+The dataset used here is the BTS On-Time Performance Airline Delay Cause dataset. The sample is restricted to monthly airline-level arrival records at John F. Kennedy International Airport from January 2020 to December 2025. The raw dataset contains 570 airline-month records. After cleaning, 569 records remain. The final sample covers 72 airport months, 12 airlines, 657,671 arrival flights, 137,247 delayed arrivals of 15 minutes or more, 18,230 cancellations, 1,873 diversions, and 11,125,838 arrival delay minutes.
+
+\subsection{Processing Workflow}
+The processing workflow has four main steps. First, the raw CSV file and the official BTS column definition file are read and checked against the expected schema. Second, airline names and the airport name are standardized so that the same business entity is not split across slightly different labels. Third, raw BTS field names are rewritten into more readable analytical names. For example, \texttt{arr\_flights} becomes \texttt{total\_arrival\_flights}, and \texttt{arr\_del15} becomes \texttt{delayed\_arrivals\_15\_plus}. Fourth, the project exports a readable full dataset, a core cleaned dataset, a column dictionary, a monthly risk summary, a delay-cause summary, and an airline risk profile.
+
+\begin{table}[H]
+\centering
+\caption{Cleaning and sample coverage}
+\begin{tabular}{lr}
+\toprule
+Metric & Value \\
+\midrule
+Raw airline-month records & 570 \\
+Cleaned airline-month records & 569 \\
+Removed for missing or zero arrival flights & 1 \\
+Removed for delayed arrivals exceeding total arrivals & 0 \\
+Years covered & 2020--2025 \\
+Airport months & 72 \\
+Airlines & 12 \\
+Total arrival flights & 657,671 \\
+Total arrival delay minutes & 11,125,838 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Two quality-control rules are especially important. The first rule removes records where total arrival flights are missing or equal to zero, because such records cannot produce meaningful delay rates, cancellation rates, or severity measures. The second rule checks whether delayed arrivals exceed total arrival flights, which would be a clear logical error. No such error appears in the current sample, but keeping the check makes the workflow safer when the dataset is updated later.
+
+\subsection{Variable Design and Modeling Logic}
+The cleaned core dataset preserves three groups of variables. The first group contains frequency variables, including total arrival flights, delayed arrivals, cancellations, and diversions. The second group contains severity variables, including total arrival delay minutes and cause-specific delay minutes for Airline, Weather, NAS, Security, and Late Aircraft. The third group contains identifiers, namely year, month, and airline name. This structure directly supports the later frequency--severity modeling framework.
+
+At the airline-month level, the basic frequency measures are
+\[
+\mathrm{DelayRate}_{a,t} =
+\frac{\mathrm{DelayedArrivals}_{a,t}}{\mathrm{TotalArrivals}_{a,t}},
+\qquad
+\mathrm{CancellationRate}_{a,t} =
+\frac{\mathrm{CancelledArrivals}_{a,t}}{\mathrm{TotalArrivals}_{a,t}}.
+\]
+Severity is measured by average delay minutes per delayed arrival:
+\[
+\mathrm{AverageSeverity}_{a,t} =
+\frac{\mathrm{TotalDelayMinutes}_{a,t}}{\mathrm{DelayedArrivals}_{a,t}}.
+\]
+If the denominator is zero, the airline-month should be treated as having no observed delay event rather than being forced into an artificial severity value. This separation is useful because operational risk modeling usually asks two different questions: how often does a disruption occur, and how severe is it once it occurs?
+
+\subsection{Descriptive Evidence}
+Figure \ref{fig:monthly-trend-en} shows the monthly trend in delayed and cancelled arrivals from 2020 to 2025. The highest delay month is July 2023, with 3,657 delayed arrivals and a delay rate of 32.69\%. The highest cancellation month is March 2020, with 1,900 cancellations, reflecting the exceptional shock at the beginning of the pandemic. This contrast is important: delays and cancellations are related disruptions, but they do not always move together. Delays often reflect congestion and operational pressure, while cancellations may also reflect large-scale planning changes and external shocks.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.94\linewidth]{chart_1_monthly_trend.png}
+\caption{Monthly delay and cancellation trend at JFK}
+\label{fig:monthly-trend-en}
+\end{figure}
+
+The delay-cause structure is highly concentrated. Airline and Late Aircraft account for 36.16\% and 35.14\% of total delay minutes, respectively. NAS contributes 24.32\%, while Weather and Security together account for less than 5\%. This finding connects directly to the risk identification section: weather is a visible aviation risk, but in this sample the main day-to-day risk mass comes from the internal operating chain and system congestion.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\linewidth]{chart_2_delay_cause_breakdown.png}
+\caption{Delay-minute contribution by cause}
+\label{fig:cause-breakdown-en}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Main delay-cause shares}
+\begin{tabular}{lrr}
+\toprule
+Cause & Delay minutes & Share \\
+\midrule
+Airline & 4,022,961 & 36.16\% \\
+Late Aircraft & 3,910,112 & 35.14\% \\
+NAS & 2,705,624 & 24.32\% \\
+Weather & 466,088 & 4.19\% \\
+Security & 21,053 & 0.19\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Figure \ref{fig:airline-profile-en} summarizes airline-level risk profiles by combining delay rate, cancellation rate, and average delay severity. JetBlue Airways contributes the largest total delay minutes, Hawaiian Airlines has the highest delay rate, and Envoy Air has the highest average delay minutes per delayed flight. This should not be read as a simple ranking of airline performance, because airlines differ in sample size, route structure, and operating role at JFK. It is more useful as a modeling guide, showing which airline-month observations may contribute more strongly to tail outcomes.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.88\linewidth]{chart_3_airline_risk_profile.png}
+\caption{Airline-level risk profile}
+\label{fig:airline-profile-en}
+\end{figure}
+
+\subsection{How This Supports Later Modeling}
+This chapter supports the later quantitative analysis in three ways. First, the core cleaned dataset separates frequency variables from severity variables, allowing the next stage to compare candidate frequency distributions such as Poisson and Negative Binomial, and candidate severity distributions such as Lognormal and Weibull. Second, the cause summary helps translate the BTS database taxonomy into the operational risk language used in the course: Airline and Late Aircraft can be grouped as internal operating-chain risk, NAS as system constraint risk, and Weather plus Security as external shock risk. Third, the monthly summary preserves chronological order, which makes it possible to define normal and disrupted operating states and then estimate state transitions.
+
+The main contribution of this chapter is therefore not a single chart. It is the construction of an interpretable, reproducible, and model-ready risk dataset. It connects the managerial analysis in the earlier chapter with the statistical modeling that follows, so the final models are not just mathematical exercises but structured operational risk analysis.
+
+\subsection{Limitations and Next Step}
+Two limitations remain. First, the data are monthly airline-level records, so individual flights, hourly airport congestion, and specific weather events cannot be directly observed. Short-term disruption propagation is therefore captured only indirectly through monthly aggregates. Second, BTS allocates some cause-specific delay counts according to reporting rules, so these fields should be read as attribution measures rather than perfectly independent event counts.
+
+Even with these limits, the prepared dataset is strong enough for the quantitative requirements of the group project. The next chapter can build directly on these outputs to compare frequency distributions, compare severity distributions, introduce state dependence, and simulate annual aggregate operational risk under different scenarios.
+
+\end{document}
