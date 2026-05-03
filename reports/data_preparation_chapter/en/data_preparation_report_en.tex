@@ -91,6 +91,37 @@ Severity is measured by average delay minutes per delayed arrival:
 \]
 If the denominator is zero, the airline-month should be treated as having no observed delay event rather than being forced into an artificial severity value. This separation is useful because operational risk modeling usually asks two different questions: how often does a disruption occur, and how severe is it once it occurs?
 
+\subsubsection*{Delay-Equivalent Minutes as a Unified Loss Metric}
+Because cancellations and diversions are not recorded in delay minutes by BTS, the project converts them into a common unit called \emph{delay-equivalent minutes}. The total operational impact for a given airline-month is defined as
+\[
+L_{a,t} = \mathrm{TotalDelayMinutes}_{a,t}
+         + 180 \times \mathrm{CancelledArrivals}_{a,t}
+         + 240 \times \mathrm{DivertedArrivals}_{a,t}.
+\]
+The choice of 180~minutes for cancellations and 240~minutes for diversions is grounded in regulatory thresholds, international passenger-rights conventions, and empirical evidence on recovery times.
+
+\textbf{Why 180~minutes for cancellations.}
+The U.S.\ Department of Transportation Tarmac Delay Rule (14~CFR~259.4), effective since April~29, 2010, prohibits airlines from keeping passengers on the tarmac for more than three hours (180~minutes) on domestic flights, with fines of up to USD~27,500 per passenger per violation \cite{dot2010tarmac}. This regulation creates a de facto boundary between a severe delay and a cancellation: as a flight approaches the three-hour mark, airlines frequently cancel rather than risk regulatory penalties. A DOT Office of Inspector General audit confirmed that cancellation rates rose significantly in the first three years after the rule took effect, validating the three-hour threshold as the practical tipping point between delay and cancellation \cite{dotoig2014tdr}. In parallel, EU~Regulation~261/2004 treats arrival delays exceeding three hours as equivalent to cancellations for the purpose of passenger compensation (EUR~250--600 depending on distance) \cite{eu261}, reinforcing the international consensus that three hours marks the boundary at which a delay becomes functionally indistinguishable from a cancellation. From a passenger-impact perspective, a cancelled flight at a major hub such as JFK typically requires rebooking on the next available service, with average wait times of two to four hours, making 180~minutes a conservative lower bound.
+
+\textbf{Why 240~minutes for diversions.}
+The same DOT tarmac rule sets a four-hour (240-minute) limit for international flights \cite{dot2010tarmac}. Because JFK is one of the busiest international gateways in the United States, a substantial share of its diversions involve international services, making the four-hour regulatory ceiling a natural reference point. More importantly, a diversion imposes strictly greater operational disruption than a cancellation: the aircraft has already departed, consumed fuel, and landed at an unplanned airport. The recovery process includes ground handling at the alternate airport, possible refueling, passenger re-screening, and either a continuation leg to the original destination or ground transportation. Peterson et~al.\ (2021) estimated that the average direct operating cost of a single diversion is approximately USD~38,000, with non-medical diversions taking significantly longer to recover than medical ones \cite{peterson2021diversion}. Four hours therefore represents a reasonable lower-bound estimate of the total additional delay imposed by a diversion. The ordering $240 > 180$ also preserves the intuitive severity hierarchy: a diversion is operationally more disruptive than a cancellation because it adds an airborne phase, extra fuel burn, crew-duty complications, and downstream schedule propagation that a pre-departure cancellation avoids.
+
+In summary, the 180- and 240-minute penalties are anchored simultaneously to U.S.\ federal regulatory thresholds (DOT Tarmac Delay Rule), international passenger-rights practice (EU~261/2004), and empirical diversion-recovery research. This design gives the delay-equivalent-minutes metric both regulatory grounding and operational logic, while avoiding the introduction of subjective monetary assumptions.
+
+\begin{thebibliography}{9}
+\bibitem{dot2010tarmac}
+U.S.\ Department of Transportation, ``Enhancing Airline Passenger Protections,'' 75~FR~32318, June~2010. 14~CFR~259.4.
+
+\bibitem{dotoig2014tdr}
+U.S.\ DOT Office of Inspector General, ``Effects of the Tarmac Delay Rule on Flight Cancellations and Delays,'' Report No.\ AV-2014-069, 2014.
+
+\bibitem{eu261}
+European Parliament and Council, Regulation~(EC) No~261/2004 establishing common rules on compensation and assistance to passengers in the event of denied boarding and of cancellation or long delay of flights, February~2004.
+
+\bibitem{peterson2021diversion}
+D.~C.~Peterson et~al., ``Data-Driven Estimation of the Impact of Diversions Due to In-Flight Medical Emergencies on Flight Delay and Aircraft Operating Costs,'' \emph{Aerospace Medicine and Human Performance}, vol.~92, no.~2, pp.~81--87, 2021.
+\end{thebibliography}
+
 \subsection{Descriptive Evidence}
 Figure \ref{fig:monthly-trend-en} shows the monthly trend in delayed and cancelled arrivals from 2020 to 2025. The highest delay month is July 2023, with 3,657 delayed arrivals and a delay rate of 32.69\%. The highest cancellation month is March 2020, with 1,900 cancellations, reflecting the exceptional shock at the beginning of the pandemic. This contrast is important: delays and cancellations are related disruptions, but they do not always move together. Delays often reflect congestion and operational pressure, while cancellations may also reflect large-scale planning changes and external shocks.
 

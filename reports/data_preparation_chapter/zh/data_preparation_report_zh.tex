@@ -89,7 +89,38 @@
 \mathrm{AverageSeverity}_{a,t} =
 \frac{\mathrm{TotalDelayMinutes}_{a,t}}{\mathrm{DelayedArrivals}_{a,t}}.
 \]
-当分母为零时，后续建模应把该航司月份视为没有可观测延误事件，而不是人为制造一个极端严重度数值。这样处理有助于把“是否发生事件”和“发生后损失多大”分开，正好对应运营风险中的频率与严重度分解。
+当分母为零时，后续建模应把该航司月份视为没有可观测延误事件，而不是人为制造一个极端严重度数值。这样处理有助于把”是否发生事件”和”发生后损失多大”分开，正好对应运营风险中的频率与严重度分解。
+
+\subsubsection*{Delay-Equivalent Minutes：统一损失口径}
+由于 BTS 数据中取消和备降并不以延误分钟形式记录，项目将其转换为统一的 \emph{delay-equivalent minutes}（延误等价分钟）。某航司在月份 $t$ 的总运营冲击定义为
+\[
+L_{a,t} = \mathrm{TotalDelayMinutes}_{a,t}
+         + 180 \times \mathrm{CancelledArrivals}_{a,t}
+         + 240 \times \mathrm{DivertedArrivals}_{a,t}.
+\]
+取消航班赋予 180 分钟、备降航班赋予 240 分钟的选择，同时基于监管阈值、国际旅客权益惯例和备降恢复流程的实证研究。
+
+\textbf{为什么取消航班的 penalty 是 180 分钟？}
+美国交通部停机坪延误规则（14~CFR~259.4）自 2010 年 4 月 29 日起规定，国内航班在停机坪上的等待时间不得超过 3 小时（180 分钟），违规航司将面临每位旅客最高 27,500 美元的罚款 \cite{dot2010tarmac}。这一规定在监管层面划定了”严重延误”与”实质取消”之间的法定分界线：当延误接近 3 小时时，航司往往选择主动取消航班以规避违规风险。美国交通部监察长办公室（OIG）的审计报告证实，该规则实施后的前三年内航班取消率显著上升，说明 3 小时阈值确实是航司在延误与取消之间做出决策的实际临界点 \cite{dotoig2014tdr}。与此同时，欧盟旅客权益条例 EC~261/2004 将到达延误超过 3 小时的航班在赔偿义务上等同于取消航班处理，旅客可获得 250 至 600 欧元的固定赔偿 \cite{eu261}，进一步确认了 3 小时作为延误与取消等价边界的国际共识。从旅客实际影响看，航班取消后通常需要等待下一个可用航班，对于 JFK 这样的大型枢纽，主要航线间隔通常在 2--4 小时之间，因此 180 分钟是保守的下界估计。
+
+\textbf{为什么备降航班的 penalty 是 240 分钟？}
+同一法规对国际航班设定的停机坪等待上限为 4 小时（240 分钟）\cite{dot2010tarmac}。JFK 作为美国最重要的国际航空枢纽之一，其备降事件中有相当比例涉及国际航班，因此 240 分钟与该监管阈值直接对应。更重要的是，备降的运营冲击严格大于取消：飞机已经起飞、消耗燃油并降落在非计划机场，后续恢复流程包括备降机场的地面处理、可能的加油、旅客重新安检，以及继续飞往原目的地或安排地面交通。Peterson 等人（2021）对美国航班备降数据的研究表明，单次备降的平均直接运营成本约为 38,000 美元，且非医疗原因的备降恢复时间显著长于医疗原因备降 \cite{peterson2021diversion}。因此 4 小时是对备降全流程额外延误的合理下界估计。$240 > 180$ 的设定也保持了直觉上的严重度递进关系：备降比取消多出了”已在空中”的阶段，涉及额外的燃油消耗、机组工时、备降机场资源占用以及后续航班的连锁影响。
+
+综上，180 分钟与 240 分钟的选择并非任意设定，而是同时锚定于美国联邦监管阈值（DOT Tarmac Delay Rule）、国际旅客权益惯例（EU~261/2004）以及备降恢复流程的实证研究。这一设计使得 delay-equivalent minutes 作为统一损失口径既有监管依据，又有运营逻辑支撑，同时避免了引入主观性更强的货币化假设。
+
+\begin{thebibliography}{9}
+\bibitem{dot2010tarmac}
+U.S.\ Department of Transportation, ``Enhancing Airline Passenger Protections,'' 75~FR~32318, June~2010. 14~CFR~259.4.
+
+\bibitem{dotoig2014tdr}
+U.S.\ DOT Office of Inspector General, ``Effects of the Tarmac Delay Rule on Flight Cancellations and Delays,'' Report No.\ AV-2014-069, 2014.
+
+\bibitem{eu261}
+European Parliament and Council, Regulation~(EC) No~261/2004 establishing common rules on compensation and assistance to passengers in the event of denied boarding and of cancellation or long delay of flights, February~2004.
+
+\bibitem{peterson2021diversion}
+D.~C.~Peterson et~al., ``Data-Driven Estimation of the Impact of Diversions Due to In-Flight Medical Emergencies on Flight Delay and Aircraft Operating Costs,'' \emph{Aerospace Medicine and Human Performance}, vol.~92, no.~2, pp.~81--87, 2021.
+\end{thebibliography}
 
 \subsection{描述性结果}
 图 \ref{fig:monthly-trend-zh} 展示了 2020 至 2025 年 JFK 月度延误和取消数量的变化。最高延误月份出现在 2023 年 7 月，当月 15 分钟以上延误达到 3,657 次，延误率为 32.69\%。最高取消月份则出现在 2020 年 3 月，当月取消 1,900 次，反映出疫情初期对航空运行的特殊冲击。这个结果提醒我们，延误与取消并不总是同步变化。延误更多体现运行压力和拥堵，取消则更容易受到外部突发事件和大规模计划调整影响。
