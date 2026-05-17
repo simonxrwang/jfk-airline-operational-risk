@@ -42,9 +42,12 @@ This repository contains a reproducible data-preparation and descriptive-analysi
 ├── reports
 │   ├── charts
 │   ├── dashboard
-│   ├── data_preparation_chapter
-│   │   ├── zh
-│   │   └── en
+│   ├── Final report
+│   │   ├── data_processing_analysis.tex
+│   │   ├── data_processing_analysis.pdf
+│   │   ├── build_final_report_figure.py
+│   │   ├── figure_rebuild_notes.md
+│   │   └── figures
 │   ├── presentation_chapter
 │   │   ├── zh
 │   │   ├── en
@@ -68,8 +71,8 @@ This repository contains a reproducible data-preparation and descriptive-analysi
   High-resolution PNG charts and SVG vector charts for reports or slides.
 - `reports/dashboard/jfk_operational_risk_dashboard.html`
   A standalone offline interactive dashboard that can be opened directly in a browser.
-- `reports/data_preparation_chapter/`
-  Bilingual LaTeX source files and compiled PDFs for the data-preparation report chapter, separated into `zh/` and `en/`.
+- `reports/Final report/`
+  Final LaTeX source, compiled PDF, report-grade multi-panel figure, and figure redesign notes for Chapter 2: Data Processing and Analysis.
 - `reports/presentation_chapter/`
   Bilingual LaTeX Beamer source files and compiled PDFs for the 4-minute presentation segment, separated into `zh/` and `en/` and using the HKU Beamer template style.
 - `reports/summary/jfk_descriptive_analysis_summary.md`
@@ -85,8 +88,8 @@ This repository contains a reproducible data-preparation and descriptive-analysi
   可用于报告或 PPT 的高清 PNG 图和 SVG 矢量图。
 - `reports/dashboard/jfk_operational_risk_dashboard.html`
   可直接在浏览器中打开的离线交互式看板。
-- `reports/data_preparation_chapter/`
-  数据准备章节报告的中英文 LaTeX 源文件与已编译 PDF，已按 `zh/` 与 `en/` 分开存放。
+- `reports/Final report/`
+  第二章 Data Processing and Analysis 的最终 LaTeX 源文件、已编译 PDF、报告版多面板图和图表重构说明。
 - `reports/presentation_chapter/`
   约 4 分钟汇报内容的中英文 LaTeX Beamer 源文件与已编译 PDF，已按 `zh/` 与 `en/` 分开存放，当前使用 HKU Beamer 模板风格。
 - `reports/summary/jfk_descriptive_analysis_summary.md`
@@ -115,22 +118,25 @@ Open `reports/dashboard/jfk_operational_risk_dashboard.html` in any modern brows
 
 使用任意现代浏览器打开 `reports/dashboard/jfk_operational_risk_dashboard.html` 即可。
 
-### 4. Rebuild the chapter PDFs | 重新编译章节 PDF
+### 4. Rebuild the final report chapter | 重新编译最终报告章节
 
-The chapter report and slides are written in LaTeX. Compile them with XeLaTeX:
+The final Chapter 2 report is written in LaTeX. Regenerate the academic multi-panel figure first, then compile the PDF with XeLaTeX:
 
-章节报告与汇报 slides 使用 LaTeX 编写。可用 XeLaTeX 重新编译：
+第二章最终报告使用 LaTeX 编写。先重新生成报告版多面板图，再用 XeLaTeX 编译 PDF：
 
 ```bash
-cd reports/data_preparation_chapter/zh
-latexmk -xelatex data_preparation_report_zh.tex
+python "reports/Final report/build_final_report_figure.py"
+cd "reports/Final report"
+latexmk -xelatex data_processing_analysis.tex
 latexmk -c
+```
 
-cd ../en
-latexmk -xelatex data_preparation_report_en.tex
-latexmk -c
+Presentation slides can still be rebuilt separately:
 
-cd ../../presentation_chapter/zh
+汇报 slides 可单独重新编译：
+
+```bash
+cd reports/presentation_chapter/zh
 latexmk -xelatex data_preparation_slides_zh.tex
 latexmk -c
 rm -f *.nav *.snm
@@ -222,16 +228,18 @@ For the current 2020-2025 JFK sample, one row was removed because total arrival 
 - Chart 1: Multi-year monthly delayed arrivals vs cancelled arrivals
 - Chart 2: Compact horizontal delay-cause breakdown with a donut summary and share bars
 - Chart 3: Airline risk profiling scatter plot
+- Final report figure: academic multi-panel figure combining the data workflow, monthly disruption rates, risk-block delay minutes, and airline frequency-severity profile
 - Offline dashboard with filtering, interactive charts, and a readable data table
-- Data-preparation chapter report in Chinese and English
+- Final Chapter 2 report: `reports/Final report/data_processing_analysis.pdf`
 - Data-preparation presentation segment in Chinese and English
 - Static charts are exported as both PNG and SVG with transparent backgrounds. The current chart style uses a muted presentation-friendly palette and system-safe fonts so PNG and SVG stay visually consistent across environments and can be placed cleanly into reports or slides.
 
 - 图 1：多年份月度延误航班与取消航班趋势图
 - 图 2：紧凑横向延误原因结构图，包含环形总览与占比条形图
 - 图 3：航司风险画像散点图
+- 最终报告图：将数据流程、月度扰动率、风险块延误分钟和航司频率-严重度画像整合为一张学术风格多面板图
 - 离线交互式看板，支持筛选、交互图表与数据表浏览
-- 中英文数据准备章节报告
+- 第二章最终报告：`reports/Final report/data_processing_analysis.pdf`
 - 中英文数据准备汇报 slides
 - 静态图表同时导出透明背景的 PNG 与 SVG。当前图表使用更适合展示的柔和配色，并采用系统安全字体，以保证 PNG 与 SVG 在不同环境中尽量保持一致，也方便嵌入报告或 slides。
 
